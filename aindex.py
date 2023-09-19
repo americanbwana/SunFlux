@@ -145,7 +145,7 @@ def main():
   except IndexError:
     name = '/tmp/aindex.png'
 
-  data = get_wwv(config['db_name'], config.get('nb_days', NB_DAYS))
+  data = get_wwv(config['db_name'], config.get('nb_days', 34))
   condition = get_conditions(config['db_name'])
   if data:
     graph(data, condition, name)
