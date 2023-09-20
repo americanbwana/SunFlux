@@ -53,9 +53,13 @@ def get_conditions(db_name):
 
 def get_wwv(db_name, days):
   data = []
+  print(db_name)
+  print(days)
   start_date = datetime.utcnow() - timedelta(days=days)
+  print(start_date)
   conn = sqlite3.connect(db_name, timeout=5,
                          detect_types=sqlite3.PARSE_DECLTYPES)
+  conn.set_trace_callback(print)
   with conn:
     curs = conn.cursor()
     results = curs.execute(WWV_REQUEST, (start_date,))
@@ -145,7 +149,8 @@ def main():
   except IndexError:
     name = '/tmp/aindex.png'
 
-  data = get_wwv(config['db_name'], 34)
+  # data = get_wwv(config['db_name'], 34)
+  data = get_wwv(config['db_name'], config.get('nb_days', NB_DAYS))
   condition = get_conditions(config['db_name'])
   if data:
     graph(data, condition, name)
